@@ -9,6 +9,7 @@ const app = express();
 mongoose.connect("mongodb://127.0.0.1:27017/aroundb");
 
 app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 app.use((req, res, next) => {
   req.user = { _id: "63b7159944de4201bfd63e9d" };
   next();

@@ -1,12 +1,9 @@
 const User = require("../models/user");
 
 const error400 = function (res) {
-  return res
-    .status(400)
-    .send({
-      message:
-        "Se pasaron datos inválidos a los métodos para crear un usuario o para actualizar el avatar/perfil de un usuario",
-    });
+  return res.status(400).send({
+    message: "Se pasaron datos inválidos",
+  });
 };
 const error404 = function (res) {
   res

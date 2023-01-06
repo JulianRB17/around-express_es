@@ -8,12 +8,9 @@ const error404 = function (res) {
   res.status(404).send({ message: "Tarjeta no encontrada" });
 };
 const error400 = function (res) {
-  return res
-    .status(400)
-    .send({
-      message:
-        "Se pasaron datos inválidos a los métodos para crear un usuario/tarjeta o para actualizar el avatar/perfil de un usuario",
-    });
+  return res.status(400).send({
+    message: "Se pasaron datos inválidos",
+  });
 };
 
 const getCards = function (req, res) {
