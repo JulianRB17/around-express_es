@@ -1,35 +1,16 @@
 const usersRoute = require("express").Router();
-const fs = require("fs");
-const path = require("path");
+const {
+  getUser,
+  getUsers,
+  createUser,
+  updateUser,
+  updateAvatar,
+} = require("../controllers/users");
 
-const usersPath = path.join(__dirname, "../data/users.json");
-
-const findUser = function (users, id, res) {
-  const user = JSON.parse(users).find((user) => user._id === id);
-
-  if (!user) {
-    res.json({ message: "ID de usuario no encontrado" });
-    res.status(404);
-    return;
-  }
-
-  res.json(id);
-};
-
-usersRoute.get("/", (req, res) => {
-  fs.readFile(usersPath, { encoding: "utf8" }, (err, cards) => {
-    if (err) console.log(err);
-    res.json(cards);
-  });
-});
-
-usersRoute.get("/:id", (req, res) => {
-  const { id } = req.params;
-
-  fs.readFile(usersPath, { encoding: "utf8" }, (err, users) => {
-    if (err) console.log(err);
-    findUser(users, id, res);
-  });
-});
+usersRoute.get("/", (req, res) => getUsers(req, res));
+usersRoute.get("/:userId", (req, res) => getUser(req, res));
+usersRoute.post("/", (req, res) => createUser(req, res));
+usersRoute.patch("/me", (req, res) => updateUser(req, res));
+usersRoute.patch("/me/avatar", (req, res) => updateAvatar(req, res));
 
 module.exports = { usersRoute };
