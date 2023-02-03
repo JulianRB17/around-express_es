@@ -12,4 +12,10 @@ node_modules
 # Archivos de sistema y carpetas de ajustes IDE
 .DS_Store
 .idea
-.vscode 
+.vscode
+
+#variables de entorno
+.env
+
+#logs
+*.log
