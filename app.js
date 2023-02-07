@@ -2,6 +2,7 @@ const express = require('express');
 const mongoose = require('mongoose');
 const { celebrate, Joi, Segments, errors } = require('celebrate');
 const validator = require('validator');
+const cors = require('cors');
 const { cardsRoute } = require('./routes/cards');
 const { usersRoute } = require('./routes/users');
 const { login, createUser, getUserData } = require('./controllers/users');
@@ -11,6 +12,11 @@ require('dotenv').config();
 
 const { PORT = 3000 } = process.env;
 const app = express();
+const allowedCors = [
+  'https://wwww.julianrb-around.students.nomoredomainssbs.ru/',
+  'https://julianrb-around.students.nomoredomainssbs.ru/',
+  'localhost:3000',
+];
 
 mongoose.connect('mongodb://127.0.0.1:27017/aroundb');
 
@@ -30,8 +36,9 @@ const emailValidator = function (value, helpers) {
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-
 app.use(requestLogger);
+app.use(cors({ origin: allowedCors }));
+
 app.post(
   '/signup',
   celebrate({
