@@ -10,13 +10,16 @@ const { requestLogger, errorLogger } = require('./middlewares/logger');
 const auth = require('./middlewares/auth');
 require('dotenv').config();
 
-const { PORT = 3000 } = process.env;
+const { PORT = 3001 } = process.env;
 const app = express();
 const allowedCors = [
   'https://wwww.julianrb-around.students.nomoredomainssbs.ru/',
   'https://julianrb-around.students.nomoredomainssbs.ru/',
   'http://localhost:3000',
 ];
+const corsOptions = function (origin, callback) {
+  if (allowedCors.indexOf(origin)) callback(null, true);
+};
 
 mongoose.connect('mongodb://127.0.0.1:27017/aroundb');
 
@@ -34,10 +37,11 @@ const emailValidator = function (value, helpers) {
   return helpers.error('string.uri');
 };
 
+app.options('*', cors());
+app.use(cors(corsOptions));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(requestLogger);
-app.use(cors({ origin: allowedCors }));
 
 app.post(
   '/signup',
