@@ -15,7 +15,7 @@ const app = express();
 const allowedCors = [
   'https://wwww.julianrb-around.students.nomoredomainssbs.ru/',
   'https://julianrb-around.students.nomoredomainssbs.ru/',
-  'localhost:3000',
+  'http://localhost:3000',
 ];
 
 mongoose.connect('mongodb://127.0.0.1:27017/aroundb');
