@@ -12,16 +12,19 @@ require('dotenv').config();
 
 const { PORT = 3001 } = process.env;
 const app = express();
+
+mongoose.connect('mongodb://127.0.0.1:27017/aroundb');
+
 const allowedCors = [
   'https://wwww.julianrb-around.students.nomoredomainssbs.ru/',
   'https://julianrb-around.students.nomoredomainssbs.ru/',
+  'http://wwww.julianrb-around.students.nomoredomainssbs.ru/',
+  'http://julianrb-around.students.nomoredomainssbs.ru/',
   'http://localhost:3000',
 ];
 const corsOptions = function (origin, callback) {
   if (allowedCors.indexOf(origin)) callback(null, true);
 };
-
-mongoose.connect('mongodb://127.0.0.1:27017/aroundb');
 
 const urlValidator = function (value, helpers) {
   if (validator.isURL(value)) {
@@ -38,7 +41,8 @@ const emailValidator = function (value, helpers) {
 };
 
 app.options('*', cors());
-app.use(cors(corsOptions));
+app.use(cors());
+
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(requestLogger);
